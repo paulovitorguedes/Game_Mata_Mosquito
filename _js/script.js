@@ -5,7 +5,9 @@ ajustarTamanhoPalcoJogo();
 randomPosition();
 
 // o comando roda a function randomPosition() a cada 1000ms (1 segundo)
-setInterval(function () { randomPosition(); }, 1000);
+setInterval(function () {
+    randomPosition();
+}, 2000);
 
 
 // Mede a altura e largura da tela html
@@ -42,6 +44,10 @@ function randomPosition() {
     mosquito.style.top = positionY + 'px';
     mosquito.style.position = 'absolute';
     mosquito.id = 'mosquito';
+    mosquito.onclick = function () {
+        //this.remove();
+        mosquito.src = '_img/fumaca.png';
+    }
 
     // cria um filho para o body
     document.body.appendChild(mosquito);
