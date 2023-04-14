@@ -9,21 +9,44 @@ body {
     width: 50px;
     height: 50px;
 }
+
 .mosquito2 {
     width: 70px;
     height: 70px;
 }
+
 .mosquito3 {
     width: 90px;
     height: 90px;
 }
 
-.ladoA{
+.ladoA {
     /* Mantem a imagem na escala original */
     transform: scaleX(1);
 }
 
-.ladoB{
+.ladoB {
     /* Inverte a escala da imagem */
     transform: scaleX(-1);
+}
+
+.painel {
+    position: absolute;
+    width: 190px;
+    padding: 10px;
+    left: 0px;
+    bottom: 0px;
+    border-top: solid 1px #fff;
+    background-color: #fff;
+    opacity: 0.7;
+}
+
+.vidas {
+    float: left;
+}
+
+.cronometro {
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
 }
