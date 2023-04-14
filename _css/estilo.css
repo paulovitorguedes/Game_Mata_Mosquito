@@ -11,3 +11,13 @@
     height: 90px;
 }
 
+.ladoA{
+    /* Mantem a imagem na escala original */
+    transform: scaleX(1);
+}
+
+.ladoB{
+    /* Inverte a escala da imagem */
+    transform: scaleX(-1);
+}
+
