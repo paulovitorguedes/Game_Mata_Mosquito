@@ -1,14 +1,10 @@
 var altura = 0;
 var largura = 0;
+var vida = 3;
 
+
+//chama função para calcular o tamanho da janela do jogo
 ajustarTamanhoPalcoJogo();
-randomPosition();
-
-// o comando roda a function randomPosition() a cada 1000ms (1 segundo)
-setInterval(function () {
-    randomPosition();
-}, 2000);
-
 
 // Mede a altura e largura da tela html
 function ajustarTamanhoPalcoJogo() {
@@ -17,6 +13,12 @@ function ajustarTamanhoPalcoJogo() {
 }
 
 
+
+// O comando roda a function randomPosition() a cada 1000ms (1 segundo)
+setInterval(function () {
+    randomPosition();
+}, 2000);//2 segundos
+
 // Muda de forma randômica a posição do mosquito
 function randomPosition() {
 
@@ -24,6 +26,17 @@ function randomPosition() {
     // Caso exista o elemento mosquito, o retorno é Thue, caso negativo retorna null
     if (document.getElementById('mosquito')) {
         document.getElementById('mosquito').remove();
+        // Para cada mosquito removido automaticanente, será reallizado a mudança do coração cheio para vazio
+        //total de 3 alterações para finalizar o jogo 
+        if (vida > 0) {
+            document.getElementById('v' + vida).src = "../_img/coracao_vazio.png";
+            vida--;
+        }
+
+    }
+
+    if (document.getElementById('fumaca')) {
+        document.getElementById('fumaca').remove();
     }
 
 
@@ -37,16 +50,19 @@ function randomPosition() {
     positionY = positionY < 0 ? 0 : positionY;
 
     // cria um document img
-    var mosquito = document.createElement('img');
-    mosquito.src = '_img/mosquito.png';
-    mosquito.className = randonSize() + " " + randonMirror();
+    var mosquito = document.createElement('img'); //cria o elemento img
+    mosquito.src = '_img/mosquito.png'; //adiciona o endereço da imagem mosquito "src"
+    mosquito.className = randonSize() + " " + randonMirror(); // classe composta
     mosquito.style.left = positionX + 'px';
     mosquito.style.top = positionY + 'px';
     mosquito.style.position = 'absolute';
     mosquito.id = 'mosquito';
+
+    //função onclik, ao clicar sobre o mosquito, altera a imagem "src" para fumaça e "id" para fumaça 
     mosquito.onclick = function () {
-        //this.remove();
+        //this.remove(); //esse comando removeria a imagem
         mosquito.src = '_img/fumaca.png';
+        mosquito.id = 'fumaca';
     }
 
     // cria um filho para o body
@@ -56,6 +72,7 @@ function randomPosition() {
 
 
 // Muda de forma randômica o tamanho do mosquito
+//set a classe para imagrm mosquito
 function randonSize() {
     var classe = Math.floor(Math.random() * 3);
 
@@ -69,9 +86,8 @@ function randonSize() {
     }
 }
 
-
-
 // Muda de forma randômica o lado do mosquito, espelhando a imagem
+//set a classe para imagrm mosquito
 function randonMirror() {
     var classe = Math.floor(Math.random() * 2);
 
