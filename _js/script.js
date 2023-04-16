@@ -28,9 +28,12 @@ function randomPosition() {
         document.getElementById('mosquito').remove();
         // Para cada mosquito removido automaticanente, será reallizado a mudança do coração cheio para vazio
         //total de 3 alterações para finalizar o jogo 
-        if (vida > 0) {
+        if (vida > 1) {
             document.getElementById('v' + vida).src = "../_img/coracao_vazio.png";
             vida--;
+        } else {
+            document.getElementById('v' + vida).src = "../_img/coracao_vazio.png";
+            window.location.href = "../_vew/fim_jogo.html";
         }
 
     }
