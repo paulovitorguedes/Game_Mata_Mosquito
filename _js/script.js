@@ -1,7 +1,7 @@
 var altura = 0;
 var largura = 0;
 var vida = 3;
-
+var tempo = 10;
 
 //chama função para calcular o tamanho da janela do jogo
 ajustarTamanhoPalcoJogo();
@@ -12,9 +12,19 @@ function ajustarTamanhoPalcoJogo() {
     altura = window.innerHeight;
 }
 
+document.getElementById('cronometro').innerHTML = tempo;
+var cronometro = setInterval(function () {
+    if (tempo == 0) {
+        document.getElementById('cronometro').innerHTML = tempo;
+        clearInterval(cronometro);
+    }
+    document.getElementById('cronometro').innerHTML = tempo;
+    tempo--;
+}, 1000);
 
 
 // O comando roda a function randomPosition() a cada 1000ms (1 segundo)
+randomPosition();
 setInterval(function () {
     randomPosition();
 }, 2000);//2 segundos
@@ -33,6 +43,7 @@ function randomPosition() {
             vida--;
         } else {
             document.getElementById('v' + vida).src = "../_img/coracao_vazio.png";
+            // window.location.href > direcionana para uma nova página html
             window.location.href = "../_vew/fim_jogo.html";
         }
 
@@ -44,7 +55,7 @@ function randomPosition() {
 
 
     // Math.random busca um valor randomico
-    // Math.floor aredonda o vaalor
+    // Math.floor aredonda o valor
     // Caso a posição da imagem cair próximo ao canto direito da tela, o comprimento da imagem irá passar da tela e criando uma barra de rolagem
     // Neste cado subtraimos uma valor em pixel superior a largura da imagem
     var positionX = Math.floor(Math.random() * largura) - 90;
@@ -70,7 +81,6 @@ function randomPosition() {
 
     // cria um filho para o body
     document.body.appendChild(mosquito);
-    console.log(randonMirror())
 }
 
 
