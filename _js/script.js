@@ -12,18 +12,20 @@ function ajustarTamanhoPalcoJogo() {
     altura = window.innerHeight;
 }
 
+//Contagrm do cronometro na tela 
 document.getElementById('cronometro').innerHTML = tempo;
 var cronometro = setInterval(function () {
     if (tempo == 0) {
         document.getElementById('cronometro').innerHTML = tempo;
         clearInterval(cronometro);
+        window.location.href = "../_vew/vitoria.html";
     }
     document.getElementById('cronometro').innerHTML = tempo;
     tempo--;
 }, 1000);
 
 
-// O comando roda a function randomPosition() a cada 1000ms (1 segundo)
+// O comando roda a funcao randomPosition() a cada 1000ms (1 segundo)
 randomPosition();
 setInterval(function () {
     randomPosition();
