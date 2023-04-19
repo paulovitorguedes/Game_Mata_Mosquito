@@ -12,17 +12,17 @@ function ajustarTamanhoPalcoJogo() {
     altura = window.innerHeight;
 }
 
-//Contagrm do cronometro na tela 
-document.getElementById('cronometro').innerHTML = tempo;
+
+document.getElementById('cronometro').innerHTML = tempo; //Valor do cronometro na tela 
 var cronometro = setInterval(function () {
     if (tempo == 0) {
-        document.getElementById('cronometro').innerHTML = tempo;
+        document.getElementById('cronometro').innerHTML = tempo; //Valor do cronometro na tela 
         clearInterval(cronometro);
-        window.location.href = "../_vew/vitoria.html";
+        window.location.href = "../_vew/vitoria.html"; //Com o valor do cronometro zero, redireciona para página vitória.html
     }
-    document.getElementById('cronometro').innerHTML = tempo;
-    tempo--;
-}, 1000);
+    document.getElementById('cronometro').innerHTML = tempo; //Valor do cronometro na tela 
+    tempo--; //decremento do tempo para o cronometro
+}, 1000); //intervalo de 1 segundo
 
 
 // O comando roda a funcao randomPosition() a cada 1000ms (1 segundo)
@@ -41,7 +41,7 @@ function randomPosition() {
         // Para cada mosquito removido automaticanente, será reallizado a mudança do coração cheio para vazio
         //total de 3 alterações para finalizar o jogo 
         if (vida > 1) {
-            document.getElementById('v' + vida).src = "../_img/coracao_vazio.png";
+            document.getElementById('v' + vida).src = "../_img/coracao_vazio.png"; // class v1, v2, v3
             vida--;
         } else {
             document.getElementById('v' + vida).src = "../_img/coracao_vazio.png";
@@ -67,7 +67,7 @@ function randomPosition() {
 
     // cria um document img
     var mosquito = document.createElement('img'); //cria o elemento img
-    mosquito.src = '_img/mosquito.png'; //adiciona o endereço da imagem mosquito "src"
+    mosquito.src = '../_img/mosquito.png'; //adiciona o endereço da imagem mosquito "src"
     mosquito.className = randonSize() + " " + randonMirror(); // classe composta
     mosquito.style.left = positionX + 'px';
     mosquito.style.top = positionY + 'px';
@@ -77,7 +77,7 @@ function randomPosition() {
     //função onclik, ao clicar sobre o mosquito, altera a imagem "src" para fumaça e "id" para fumaça 
     mosquito.onclick = function () {
         //this.remove(); //esse comando removeria a imagem
-        mosquito.src = '_img/fumaca.png';
+        mosquito.src = '../_img/fumaca.png';
         mosquito.id = 'fumaca';
     }
 
