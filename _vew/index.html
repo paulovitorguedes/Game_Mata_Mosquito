@@ -19,37 +19,51 @@
 
 
 <body>
-
+    <!-- imagem aoresentação do APP Mata Mosquito -->
     <div class="container">
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-center">
                     <img src="../_img/game.png" alt="index_mata_mosquito">
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
+
+    <!-- Select com as opções de nível do jogo -->
     <div class="container">
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-danger btn-lg" onclick="window.location.href = 'index.html'">Iniciar Game</button>
-
+                    <div class="mb-2">
+                        <select class="form-control" name="nivel" id="nivel">
+                            <option value=""> Selecione o Nível</option>
+                            <option value="facil">Fácil</option>
+                            <option value="medio">Médio</option>
+                            <option value="dificil">Difícil</option>
+                        </select>
+                    </div>
                 </div>
-
             </div>
-
         </div>
+    </div>
 
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-danger btn-lg"
+                        onclick=iniciaJogo()>Iniciar Game</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
     <!-- JavaScript  -->
-    <!-- <script src="_js/script.js"></script> -->
+    <script src="../_js/script.js"></script>
 
 </body>
 

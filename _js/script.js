@@ -12,6 +12,15 @@ function ajustarTamanhoPalcoJogo() {
     altura = window.innerHeight;
 }
 
+function iniciaJogo() {
+    var nivel = document.getElementById('nivel').value;
+    if(nivel === ''){
+        alert('Selecione um nível para iniciar o jogo');
+        return false; //finaliza a lógica da função
+    }
+}
+
+
 
 document.getElementById('cronometro').innerHTML = tempo; //Valor do cronometro na tela 
 var cronometro = setInterval(function () {
