@@ -1,44 +1,80 @@
-var altura = 0;
-var largura = 0;
+//window.innerWidth e window.innerHeight busca o tamanho da janela "comprimrnto e altura", será utilizado para o mosquito não ultrapassar o tamanho da janela
+var altura = window.innerHeight;
+var largura = window.innerWidth;
 var vida = 3;
-var tempo = 10;
+var tempo = 20;
+var timeDificult = 0;
+var nivel = null;
 
-//chama função para calcular o tamanho da janela do jogo
-ajustarTamanhoPalcoJogo();
+//Chama a função para setar o nivel de dificuldade do jogo
+setDificult();
 
-// Mede a altura e largura da tela html
-function ajustarTamanhoPalcoJogo() {
-    largura = window.innerWidth;
-    altura = window.innerHeight;
-}
+//Inicia o cronotro na tela e encaminha para página vitória caso o time finalize
+setCronometro();
 
+// Função do botão inicar jogo da index.html
 function iniciaJogo() {
-    var nivel = document.getElementById('nivel').value;
-    if(nivel === ''){
+    //Recupera o nível selecionado na variavel local nivel
+    nivel = document.getElementById('nivel').value;
+    if (nivel === '') {
         alert('Selecione um nível para iniciar o jogo');
         return false; //finaliza a lógica da função
     }
+    //Direciona para a página app.html com informação do nivel na URL
+    window.location.href = "../_vew/app.html?" + nivel;
 }
 
 
 
-document.getElementById('cronometro').innerHTML = tempo; //Valor do cronometro na tela 
-var cronometro = setInterval(function () {
-    if (tempo == 0) {
-        document.getElementById('cronometro').innerHTML = tempo; //Valor do cronometro na tela 
-        clearInterval(cronometro);
-        window.location.href = "../_vew/vitoria.html"; //Com o valor do cronometro zero, redireciona para página vitória.html
+
+
+
+//Recebe os dados da URL com o nivel do jogo
+function setDificult() {
+    nivel = window.location.search; //Variável recebe o valor da URL incluindo o ?
+    nivel = nivel.replace('?', ''); //Apaga o char ? da informação recuperada da URL 
+    if (nivel === 'facil') {
+        timeDificult = 3000;
+    } else if (nivel === 'medio') {
+        timeDificult = 2000;
+    } else if (nivel === 'dificil') {
+        timeDificult = 1000;
     }
-    document.getElementById('cronometro').innerHTML = tempo; //Valor do cronometro na tela 
-    tempo--; //decremento do tempo para o cronometro
-}, 1000); //intervalo de 1 segundo
+}
 
 
-// O comando roda a funcao randomPosition() a cada 1000ms (1 segundo)
+
+
+
+//Contágem do Cronometro na tela
+function setCronometro(){
+    document.getElementById('cronometro').innerHTML = tempo; //Apresenta o valor inicial do cronometro na tela 
+    var cronometro = setInterval(function () {
+        if (tempo == 0) {
+            document.getElementById('cronometro').innerHTML = tempo;
+            clearInterval(cronometro);//finaliza o setainterval para impedir a contagem com nr negativo
+            window.location.href = "../_vew/vitoria.html"; //Com o valor do cronometro zero, redireciona para página vitória.html
+        }
+        document.getElementById('cronometro').innerHTML = tempo; 
+        tempo--; //decremento do tempo para o cronometro
+    }, 1000); //intervalo de 1 segundo
+}
+ 
+
+
+
+
+
+
+//A função cria intervalo de tempo do reposicionamento do mosquito
+//quanto menor o tempo, maior a dificuldade do jogo
 randomPosition();
 setInterval(function () {
     randomPosition();
-}, 2000);//2 segundos
+}, timeDificult); // timeDificult será alterado conforme a seleção da dificuldade do jogo.
+
+
+
 
 // Muda de forma randômica a posição do mosquito
 function randomPosition() {
@@ -95,6 +131,9 @@ function randomPosition() {
 }
 
 
+
+
+
 // Muda de forma randômica o tamanho do mosquito
 //set a classe para imagrm mosquito
 function randonSize() {
@@ -110,6 +149,10 @@ function randonSize() {
     }
 }
 
+
+
+
+
 // Muda de forma randômica o lado do mosquito, espelhando a imagem
 //set a classe para imagrm mosquito
 function randonMirror() {
@@ -122,3 +165,8 @@ function randonMirror() {
             return 'ladoB';
     }
 }
+
+
+
+
+
