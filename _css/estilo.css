@@ -49,8 +49,9 @@ body {
     float: left;
 }
 
-.cronometro {
+.cronometro, .record, .pontos {
     float: left;
     font-size: 20px;
     font-weight: bold;
 }
+
