@@ -5,12 +5,24 @@ var vida = 3;
 var tempo = 20;
 var timeDificult = 0;
 var nivel = null;
+var record = 0;
+var pontos = 0;
 
-//Chama a função para setar o nivel de dificuldade do jogo
-setDificult();
 
-//Inicia o cronotro na tela e encaminha para página vitória caso o time finalize
-setCronometro();
+//Verifica se existe algum parametro na URL
+if (window.location.search) {
+    var v = window.location.search.replace('?', '');
+    if(v == 'facil' || v == 'medio' || v == 'dificil'){
+        //Chama a função para setar o nivel de dificuldade do jogo
+        setDificult();
+    } else {
+        //o paramtro apresentado será os pontos contido no jogo
+        document.getElementById('pontos').innerHTML = v;
+    }
+    
+}
+
+
 
 // Função do botão inicar jogo da index.html
 function iniciaJogo() {
@@ -40,6 +52,10 @@ function setDificult() {
     } else if (nivel === 'dificil') {
         timeDificult = 1000;
     }
+
+    //Inicia o cronotro na tela e encaminha para página vitória caso o time finalize
+    setCronometro();
+    setStart();
 }
 
 
@@ -47,31 +63,33 @@ function setDificult() {
 
 
 //Contágem do Cronometro na tela
-function setCronometro(){
+function setCronometro() {
     document.getElementById('cronometro').innerHTML = tempo; //Apresenta o valor inicial do cronometro na tela 
     var cronometro = setInterval(function () {
         if (tempo == 0) {
             document.getElementById('cronometro').innerHTML = tempo;
             clearInterval(cronometro);//finaliza o setainterval para impedir a contagem com nr negativo
-            window.location.href = "../_vew/vitoria.html"; //Com o valor do cronometro zero, redireciona para página vitória.html
+            window.location.href = "../_vew/vitoria.html?" + pontos; //Com o valor do cronometro zero, redireciona para página vitória.html com pontos como parametro
         }
-        document.getElementById('cronometro').innerHTML = tempo; 
+        document.getElementById('cronometro').innerHTML = tempo;
         tempo--; //decremento do tempo para o cronometro
     }, 1000); //intervalo de 1 segundo
 }
- 
 
 
 
 
 
 
-//A função cria intervalo de tempo do reposicionamento do mosquito
-//quanto menor o tempo, maior a dificuldade do jogo
-randomPosition();
-setInterval(function () {
+function setStart() {
+    //A função cria intervalo de tempo do reposicionamento do mosquito
+    //quanto menor o tempo, maior a dificuldade do jogo
     randomPosition();
-}, timeDificult); // timeDificult será alterado conforme a seleção da dificuldade do jogo.
+    setInterval(function () {
+        randomPosition();
+    }, timeDificult); // timeDificult será alterado conforme a seleção da dificuldade do jogo.
+
+}
 
 
 
@@ -91,7 +109,7 @@ function randomPosition() {
         } else {
             document.getElementById('v' + vida).src = "../_img/coracao_vazio.png";
             // window.location.href > direcionana para uma nova página html
-            window.location.href = "../_vew/fim_jogo.html";
+            window.location.href = "../_vew/fim_jogo.html?" + pontos;
         }
 
     }
@@ -124,6 +142,8 @@ function randomPosition() {
         //this.remove(); //esse comando removeria a imagem
         mosquito.src = '../_img/fumaca.png';
         mosquito.id = 'fumaca';
+        pontos++;
+        document.getElementById('pontos').innerHTML = pontos;
     }
 
     // cria um filho para o body
