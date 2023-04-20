@@ -5,21 +5,41 @@ var vida = 3;
 var tempo = 20;
 var timeDificult = 0;
 var nivel = null;
-var record = 0;
 var pontos = 0;
+var record = 0;
+var url = window.location.href;
 
 
-//Verifica se existe algum parametro na URL
+
+
+//As informações de 'nível', 'pontos' e 'record' serão trafegadas pela URL. A condicional abaixo analisa as paginas html recuperando essas informações para apresentação na tela
+//Não entrará na condicional em caso de primeiro acesso.
 if (window.location.search) {
-    var v = window.location.search.replace('?', '');
-    if(v == 'facil' || v == 'medio' || v == 'dificil'){
-        //Chama a função para setar o nivel de dificuldade do jogo
-        setDificult();
-    } else {
-        //o paramtro apresentado será os pontos contido no jogo
-        document.getElementById('pontos').innerHTML = v;
+
+    if (url.indexOf("app.html") >= 0) {  //Págna app.html
+        url = window.location.search.replace('?', ''); //remove a char ? da string
+        const param = url.split('-');//Divide a string pelo char '-' criando um Array de suas partes
+        nivel = param[0].substring(2);//Remove os 2 char iniciais (n:), mantendo o valor do nivel
+        record = param[1].substring(2);//Remove os 2 char iniciais (r:), mantendo o valor do record
+        setDificult(nivel);
+
+    } else if (url.indexOf("vitoria.html") >= 0 || url.indexOf("fim_jogo.html") >= 0) { //Págna vitoria.html e fim_jogo.html
+        url = window.location.search.replace('?', '');
+        const param = url.split('-');
+        pontos = param[0].substring(2);
+        record = param[1].substring(2);
+        document.getElementById('pontos').innerHTML = pontos;
+
+    } else { //Págna index.html
+        url = window.location.search.replace('?', '');
+        record = url.substring(2);
+        document.getElementById('record').innerHTML = record;
     }
-    
+
+
+
+} else { //Estebelece valor zero ao Record no primeiro acesso
+    document.getElementById('record').innerHTML = '0';
 }
 
 
@@ -32,8 +52,11 @@ function iniciaJogo() {
         alert('Selecione um nível para iniciar o jogo');
         return false; //finaliza a lógica da função
     }
-    //Direciona para a página app.html com informação do nivel na URL
-    window.location.href = "../_vew/app.html?" + nivel;
+
+    var rd = document.getElementById('record').innerHTML;
+
+    //Direciona para a página app.html com informação do nivel e Record na URL
+    window.location.href = "../_vew/app.html?n:" + nivel + "-r:" + rd;
 }
 
 
@@ -42,9 +65,8 @@ function iniciaJogo() {
 
 
 //Recebe os dados da URL com o nivel do jogo
-function setDificult() {
-    nivel = window.location.search; //Variável recebe o valor da URL incluindo o ?
-    nivel = nivel.replace('?', ''); //Apaga o char ? da informação recuperada da URL 
+function setDificult(nivel) {
+
     if (nivel === 'facil') {
         timeDificult = 3000;
     } else if (nivel === 'medio') {
@@ -69,7 +91,12 @@ function setCronometro() {
         if (tempo == 0) {
             document.getElementById('cronometro').innerHTML = tempo;
             clearInterval(cronometro);//finaliza o setainterval para impedir a contagem com nr negativo
-            window.location.href = "../_vew/vitoria.html?" + pontos; //Com o valor do cronometro zero, redireciona para página vitória.html com pontos como parametro
+
+            if (pontos > record) { //Verifica se a pontiação ultrapassou record
+                record = pontos;
+            }
+
+            window.location.href = "../_vew/vitoria.html?p:" + pontos + "-r:" + record; //Com o valor do cronometro zero, redireciona para página vitória.html com pontos como parametro
         }
         document.getElementById('cronometro').innerHTML = tempo;
         tempo--; //decremento do tempo para o cronometro
@@ -108,8 +135,13 @@ function randomPosition() {
             vida--;
         } else {
             document.getElementById('v' + vida).src = "../_img/coracao_vazio.png";
+
+            if (pontos > record) { //Verifica se a pontiação ultrapassou record
+                record = pontos;
+            }
+
             // window.location.href > direcionana para uma nova página html
-            window.location.href = "../_vew/fim_jogo.html?" + pontos;
+            window.location.href = "../_vew/fim_jogo.html?p:" + pontos + "-r:" + record;
         }
 
     }
@@ -187,6 +219,9 @@ function randonMirror() {
 }
 
 
-
+// Função do botão Reinicar jogo das paginas vitoria.html e fim_jogo.html
+function setReinicia() {
+    window.location.href = "../_vew/index.html?r:" + record;
+}
 
 
