@@ -182,6 +182,11 @@ function randomPosition() {
         mosquito.id = 'fumaca';
         pontos++;
         document.getElementById('pontos').innerHTML = pontos;
+
+        //Adiciona audio simulando batida da raquete
+        var audioPop = document.getElementById('pop');
+        audioZoom.pause();
+        audioPop.play();
     }
 
     // cria um filho para o body
