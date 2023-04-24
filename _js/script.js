@@ -169,6 +169,12 @@ function randomPosition() {
     mosquito.style.position = 'absolute';
     mosquito.id = 'mosquito';
 
+
+    //Adiciona o Audio de zumbido no fundo do jogo
+    var audioZoom = document.getElementById('zumbido');
+    audioZoom.play();
+    
+
     //função onclik, ao clicar sobre o mosquito, altera a imagem "src" para fumaça e "id" para fumaça 
     mosquito.onclick = function () {
         //this.remove(); //esse comando removeria a imagem
@@ -223,5 +229,4 @@ function randonMirror() {
 function setReinicia() {
     window.location.href = "../_vew/index.html?r:" + record;
 }
-
 
