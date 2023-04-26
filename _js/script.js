@@ -8,7 +8,7 @@ var nivel = null;
 var pontos = 0;
 var record = 0;
 var url = window.location.href;
-
+var semCronometro = false;
 
 
 
@@ -21,7 +21,8 @@ if (window.location.search) {
         const param = url.split('-');//Divide a string pelo char '-' criando um Array de suas partes
         nivel = param[0].substring(2);//Remove os 2 char iniciais (n:), mantendo o valor do nivel
         record = param[1].substring(2);//Remove os 2 char iniciais (r:), mantendo o valor do record
-        setDificult(nivel);
+        semCronometro = param[2].substring(2);//Remove os 2 char iniciais (c:), mantendo o valor do cronometro
+        setDificult(nivel, semCronometro);
 
     } else if (url.indexOf("vitoria.html") >= 0 || url.indexOf("fim_jogo.html") >= 0) { //Págna vitoria.html e fim_jogo.html
         url = window.location.search.replace('?', '');
@@ -53,10 +54,18 @@ function iniciaJogo() {
         return false; //finaliza a lógica da função
     }
 
+    // verifica se checkbox sem cronometro está habilitado
+    if(document.getElementById('time').checked) {
+        semCronometro = true;
+    } else {
+        semCronometro = false;
+    }
+
+    //valor atribuido ao record
     var rd = document.getElementById('record').innerHTML;
 
     //Direciona para a página app.html com informação do nivel e Record na URL
-    window.location.href = "../_vew/app.html?n:" + nivel + "-r:" + rd;
+    window.location.href = "../_vew/app.html?n:" + nivel + "-r:" + rd + "-c:" + semCronometro;
 }
 
 
@@ -65,7 +74,7 @@ function iniciaJogo() {
 
 
 //Recebe os dados da URL com o nivel do jogo
-function setDificult(nivel) {
+function setDificult(nivel, sc) {
 
     if (nivel === 'facil') {
         timeDificult = 3000;
@@ -76,7 +85,10 @@ function setDificult(nivel) {
     }
 
     //Inicia o cronotro na tela e encaminha para página vitória caso o time finalize
-    setCronometro();
+    if(!sc){
+        alert('entrou');
+        setCronometro();
+    }
     setStart();
 }
 
