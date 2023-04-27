@@ -176,6 +176,7 @@ function randomPosition() {
     // cria um document img
     var mosquito = document.createElement('img'); //cria o elemento img
     mosquito.src = '../_img/mosquito.png'; //adiciona o endereço da imagem mosquito "src"
+    mosquito.alt = 'mosquito.png';
     mosquito.className = randonSize() + " " + randonMirror(); // classe composta
     mosquito.style.left = positionX + 'px';
     mosquito.style.top = positionY + 'px';
