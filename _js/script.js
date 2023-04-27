@@ -93,7 +93,7 @@ function setDificult(nivel, sc) {
 
 //Contágem do Cronometro na tela
 function setCronometro(cron) {
-    if (cron == 'true') {
+    if (cron == 'false') {
         console.log('Cronometro habilitado');
         document.getElementById('cronometro').innerHTML = tempo; //Apresenta o valor inicial do cronometro na tela 
         var cronometro = setInterval(function () {
