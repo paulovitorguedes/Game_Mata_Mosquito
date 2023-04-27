@@ -22,7 +22,8 @@ if (window.location.search) {
         nivel = param[0].substring(2);//Remove os 2 char iniciais (n:), mantendo o valor do nivel
         record = param[1].substring(2);//Remove os 2 char iniciais (r:), mantendo o valor do record
         semCronometro = param[2].substring(2);//Remove os 2 char iniciais (c:), mantendo o valor do cronometro
-        setDificult(nivel, semCronometro);
+        setDificult(nivel);
+        setCronometro(semCronometro);
 
     } else if (url.indexOf("vitoria.html") >= 0 || url.indexOf("fim_jogo.html") >= 0) { //Págna vitoria.html e fim_jogo.html
         url = window.location.search.replace('?', '');
@@ -55,7 +56,7 @@ function iniciaJogo() {
     }
 
     // verifica se checkbox sem cronometro está habilitado
-    if(document.getElementById('time').checked) {
+    if (document.getElementById('time').checked) {
         semCronometro = true;
     } else {
         semCronometro = false;
@@ -75,7 +76,6 @@ function iniciaJogo() {
 
 //Recebe os dados da URL com o nivel do jogo
 function setDificult(nivel, sc) {
-
     if (nivel === 'facil') {
         timeDificult = 3000;
     } else if (nivel === 'medio') {
@@ -84,11 +84,6 @@ function setDificult(nivel, sc) {
         timeDificult = 1000;
     }
 
-    //Inicia o cronotro na tela e encaminha para página vitória caso o time finalize
-    if(!sc){
-        alert('entrou');
-        setCronometro();
-    }
     setStart();
 }
 
@@ -97,22 +92,28 @@ function setDificult(nivel, sc) {
 
 
 //Contágem do Cronometro na tela
-function setCronometro() {
-    document.getElementById('cronometro').innerHTML = tempo; //Apresenta o valor inicial do cronometro na tela 
-    var cronometro = setInterval(function () {
-        if (tempo == 0) {
-            document.getElementById('cronometro').innerHTML = tempo;
-            clearInterval(cronometro);//finaliza o setainterval para impedir a contagem com nr negativo
+function setCronometro(cron) {
+    if (cron == 'true') {
+        console.log('Cronometro habilitado');
+        document.getElementById('cronometro').innerHTML = tempo; //Apresenta o valor inicial do cronometro na tela 
+        var cronometro = setInterval(function () {
+            if (tempo == 0) {
+                document.getElementById('cronometro').innerHTML = tempo;
+                clearInterval(cronometro);//finaliza o setainterval para impedir a contagem com nr negativo
 
-            if (pontos > record) { //Verifica se a pontiação ultrapassou record
-                record = pontos;
+                if (pontos > record) { //Verifica se a pontiação ultrapassou record
+                    record = pontos;
+                }
+
+                window.location.href = "../_vew/vitoria.html?p:" + pontos + "-r:" + record; //Com o valor do cronometro zero, redireciona para página vitória.html com pontos como parametro
             }
+            document.getElementById('cronometro').innerHTML = tempo;
+            tempo--; //decremento do tempo para o cronometro
+        }, 1000); //intervalo de 1 segundo
+    } else {
+        console.log('Cronometro desabilitado');
+    }
 
-            window.location.href = "../_vew/vitoria.html?p:" + pontos + "-r:" + record; //Com o valor do cronometro zero, redireciona para página vitória.html com pontos como parametro
-        }
-        document.getElementById('cronometro').innerHTML = tempo;
-        tempo--; //decremento do tempo para o cronometro
-    }, 1000); //intervalo de 1 segundo
 }
 
 
@@ -185,7 +186,7 @@ function randomPosition() {
     //Adiciona o Audio de zumbido no fundo do jogo
     var audioZoom = document.getElementById('zumbido');
     audioZoom.play();
-    
+
 
     //função onclik, ao clicar sobre o mosquito, altera a imagem "src" para fumaça e "id" para fumaça 
     mosquito.onclick = function () {
