@@ -1,6 +1,6 @@
 
 # Game Mata Mosquito 
-![alt text](https://github.com/paulovitorguedes/Game_Mata_Mosquito/_img/game.png "Logo titulo 1")
+![alt text](_img/game.png)
 
 #### Um jogo feito durante o curso de Full Stack DevWeb, que se resume em matar mosquistos!
 
